@@ -1,0 +1,165 @@
+#include <iostream>
+#include<iomanip>
+#include <list>
+#include <fstream>
+#include <string.h>
+#include <map>
+#include <stdio.h>
+#include <ctype.h>
+#define FILENAME_MAX 301
+using namespace std;
+typedef map<string, int> MapType;
+void wordCounter();
+void showFileContent();
+void findWordinFile();
+int main(){
+
+char choice='q';
+while(choice!='e'){
+    cout<<"|----------Welcome to File Word Counter------------|\n"
+          "|1. To know the content of a file, enter------->\"o\"|\n"
+          "|                                                  |\n"
+          "|2. To sort the words of a file, enter--------->\"s\"|\n"
+          "|                                                  |\n"
+          "|3. To find a specific word in a file, enter--->\"f\"|\n"
+          "|                                                  |\n"
+          "|4. To exit the program, enter----------------->\"e\"|\n";
+      cout<<endl;
+    cout<<"Please enter your option: "<<endl;
+    cin>>choice;
+    cout<<endl;
+    if(choice=='o')
+    showFileContent();
+    if(choice=='s')
+    wordCounter();
+    if(choice=='f')
+    findWordinFile();
+}
+cout<<"Exited successfully!"<<endl;
+
+return 0;
+
+}
+
+void wordCounter(){
+    string data=" ";
+    cout<<"Write the name of the file to store your data (Recommended format \".txt\",\".csv\"):"<<endl;
+    cin>>data;
+    ofstream Excel;
+    string filename;
+    cout<<endl;
+	cout <<"Enter a file name and press enter to count the words: "<<endl;
+	cin>>filename;
+	ifstream ifile;
+	ifile.open(filename);
+	if (!ifile){
+		cerr<< filename<<" could not be opened." << '\n';
+	}
+	char ch[1000];
+	char c[1000];
+	MapType m;
+
+    Excel.open(data);
+	while(ifile){
+
+    ifile>>c;
+    for(int i=0;i<sizeof(ch);i++){
+
+        if(ispunct(c[i]) || !isalpha(c[i]))
+            c[i]='\0';
+        }
+    ++m[c];
+}
+int x=0;
+
+for (MapType::iterator word = m.begin(); word != m.end(); ++word) {
+        string spc=word->first;
+    if(spc=="\0")//Whitespace removed
+    continue;
+        Excel<<word->first<<", "<<word->second<<endl;
+
+}
+
+for (MapType::iterator iter = m.begin(); iter != m.end(); ++iter) {
+    string check=iter->first;
+    if(check=="\0")//Whitespace removed
+    continue;
+	cout << iter->first << " occurred " << iter->second << " times.\n";
+    x++;
+
+}
+cout<<"Total: "<<x<<" words"<<endl;
+cout<<endl;
+Excel.close();
+}
+
+void showFileContent(){
+/*First we open the existing file so the user knows the content of it, and
+    can test the program properly*/
+    string Text;
+    cout<<"Enter the name of the file to read it: "<<endl;
+    cin>>Text;
+    cout<<endl;
+    ifstream openFile(Text);
+     if(openFile.is_open())
+    {
+        while(!openFile.eof())
+        {
+            getline(openFile, Text);
+            cout << Text << endl;
+        }
+    }
+    cout<<endl;
+    openFile.close();
+}
+void findWordinFile(){
+    string data=" ";
+    cout<<"Write the name of the file to store your data (Recommended format \".txt\",\".csv\"):"<<endl;
+    cin>>data;
+    ofstream Excel(data);
+    cout<<endl;
+    string stop = " ";
+    string filename;
+	cout <<"Enter a file name and press enter: "<<endl;
+	cin>>filename;
+
+	ifstream ifile;
+	ifile.open(filename);
+	if (!ifile){
+		cerr<< filename<<" could not be opened." << '\n';
+	}
+	char c[1000];
+	MapType m;
+
+	while(ifile){
+
+    ifile>>c;
+
+    ++m[c];
+}
+bool f=true;
+    while(true){
+        cout<<endl;
+        cout<<"Enter the word that you want to find (to stop enter \"x\"): "<<endl;
+        cin>>stop;
+        if(stop=="x")
+        break;
+    for (MapType::iterator word = m.begin(); word != m.end(); ++word) {
+        if(word->first==stop){
+        cout<<word->second<< " occurrence(s) of the word "<<"\""<<word->first<<"\""<<endl;
+        Excel<<word->first<<","<<word->second<<endl;
+        f=true;
+        break;
+
+        }
+        else
+        f=false;
+
+}
+    if(!f){
+        cout<<"0 occurrence(s) of the word "<<"\""<<stop<<"\""<<endl;
+        Excel<<stop<<","<<0<<endl;
+    }
+}
+Excel.close();
+}
