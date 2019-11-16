@@ -1,7 +1,6 @@
 #include <iostream>
 #include <fstream>
 #include <map>
-#define FILENAME_MAX 301
 using namespace std;
 typedef map<string, int> MapType;
 void wordCounter();
@@ -85,6 +84,7 @@ for (MapType::iterator iter = m.begin(); iter != m.end(); ++iter) {
 }
 cout<<"Total: "<<x<<" words"<<endl;
 cout<<endl;
+ifile.close();
 Excel.close();
 }
 
@@ -123,7 +123,7 @@ void findWordinFile(){
 	if (!ifile){
 		cerr<< filename<<" could not be opened." << '\n';
 	}
-	char c[1000];
+	char c[10000];
 	MapType m;
 
 	while(ifile){
@@ -132,6 +132,7 @@ void findWordinFile(){
 
     ++m[c];
 }
+
 bool f=true;
     while(true){
         cout<<endl;
@@ -155,6 +156,7 @@ bool f=true;
         cout<<"0 occurrence(s) of the word "<<"\""<<stop<<"\""<<endl;
         Excel<<stop<<","<<0<<endl;
     }
+    ifile.close();
 }
 Excel.close();
 }
