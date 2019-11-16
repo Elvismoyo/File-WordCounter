@@ -1,11 +1,6 @@
 #include <iostream>
-#include<iomanip>
-#include <list>
 #include <fstream>
-#include <string.h>
 #include <map>
-#include <stdio.h>
-#include <ctype.h>
 #define FILENAME_MAX 301
 using namespace std;
 typedef map<string, int> MapType;
