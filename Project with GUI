@@ -11,14 +11,17 @@ int main(){
 char choice='q';
 while(choice!='e'){
     cout<<"|----------Welcome to File Word Counter------------|\n"
+          "|                                                  |\n"
           "|1. To know the content of a file, enter------->\"o\"|\n"
           "|                                                  |\n"
           "|2. To sort the words of a file, enter--------->\"s\"|\n"
           "|                                                  |\n"
           "|3. To find a specific word in a file, enter--->\"f\"|\n"
           "|                                                  |\n"
-          "|4. To exit the program, enter----------------->\"e\"|\n";
-      cout<<endl;
+          "|4. To exit the program, enter----------------->\"e\"|\n"
+          "|__________________________________________________|";
+
+    cout<<endl;
     cout<<"Please enter your option: "<<endl;
     cin>>choice;
     cout<<endl;
